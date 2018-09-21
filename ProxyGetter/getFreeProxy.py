@@ -212,11 +212,15 @@ class GetFreeProxy(object):
         """
         urls = ['https://proxy.coderbusy.com/classical/country/cn.aspx?page=1']
         request = WebRequest()
+        failedTime = 0
         for url in urls:
-            r = request.get(url)
-            proxies = re.findall('data-ip="(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})".+?>(\d+)</td>', r.text)
-            for proxy in proxies:
-                yield ':'.join(proxy)
+            try:
+                r = request.get(url)
+                proxies = re.findall('data-ip="(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})".+?>(\d+)</td>', r.text)
+                for proxy in proxies:
+                    yield ':'.join(proxy)
+            except Exception,e
+                
 
     @staticmethod
     def freeProxyTen():
